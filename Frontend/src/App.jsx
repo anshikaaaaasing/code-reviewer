@@ -1,66 +1,65 @@
-import { useState, useEffect } from 'react'
-import "prismjs/themes/prism-tomorrow.css"
-import Editor from "react-simple-code-editor"
-import prism from "prismjs"
-import Markdown from "react-markdown"
-import rehypeHighlight from "rehype-highlight";
-import "highlight.js/styles/github-dark.css";
-import axios from 'axios'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Navigation from './components/Navigation';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import CodeReviewApp from './components/CodeReviewApp';
+import './App.css';
 
-function App() {
-  const [ count, setCount ] = useState(0)
-  const [ code, setCode ] = useState(` function sum() {
-  return 1 + 1
-}`)
-
-  const [ review, setReview ] = useState(``)
-
-  useEffect(() => {
-    prism.highlightAll()
-  }, [])
-
-  async function reviewCode() {
-    const response = await axios.post('http://localhost:3000/ai/get-review', { code })
-    setReview(response.data)
-  }
+function AppRoutes({ theme, toggleTheme }) {
+  const { user, loading } = useAuth();
 
   return (
     <>
-      <main>
-        <div className="left">
-          <div className="code">
-            <Editor
-              value={code}
-              onValueChange={code => setCode(code)}
-              highlight={code => prism.highlight(code, prism.languages.javascript, "javascript")}
-              padding={10}
-              style={{
-                fontFamily: '"Fira code", "Fira Mono", monospace',
-                fontSize: 16,
-                border: "1px solid #ddd",
-                borderRadius: "5px",
-                height: "100%",
-                width: "100%"
-              }}
-            />
-          </div>
-          <div
-            onClick={reviewCode}
-            className="review">Review</div>
-        </div>
-        <div className="right">
-          <Markdown
-
-            rehypePlugins={[ rehypeHighlight ]}
-
-          >{review}</Markdown>
-        </div>
-      </main>
+      {user && !loading && <Navigation theme={theme} toggleTheme={toggleTheme} />}
+      <div className="routes-wrapper">
+        <Routes>
+          <Route path="/login" element={<Login theme={theme} toggleTheme={toggleTheme} />} />
+          <Route path="/signup" element={<Signup theme={theme} toggleTheme={toggleTheme} />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <div className="main-container">
+                  <CodeReviewApp theme={theme} />
+                  <footer className="footer">
+                    <p>Advanced Code Review Tool</p>
+                  </footer>
+                </div>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </div>
     </>
-  )
+  );
 }
 
+export default function App() {
+  const [theme, setTheme] = useState('dark');
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
 
-export default App
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
+
+  return (
+    <div className={`app-wrapper ${theme}`}>
+      <AuthProvider>
+        <Router>
+          <AppRoutes theme={theme} toggleTheme={toggleTheme} />
+        </Router>
+      </AuthProvider>
+    </div>
+  );
+}

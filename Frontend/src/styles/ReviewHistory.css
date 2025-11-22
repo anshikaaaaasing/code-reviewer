@@ -1,0 +1,193 @@
+.review-history {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.history-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(96, 165, 250, 0.2);
+}
+
+.history-header h2 {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.history-header p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.app.light .history-header {
+  border-bottom-color: rgba(201, 169, 97, 0.2);
+}
+
+.history-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.history-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.history-item:hover {
+  box-shadow: 0 8px 24px rgba(96, 165, 250, 0.15);
+  border-color: var(--primary);
+}
+
+.app.light .history-item:hover {
+  box-shadow: 0 8px 24px rgba(201, 169, 97, 0.15);
+}
+
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.history-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.language-badge {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.app.light .language-badge {
+  background: linear-gradient(135deg, #d4a574 0%, #c9a961 100%);
+}
+
+.timestamp {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.grade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.history-item-code {
+  background: var(--bg-primary);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.history-item-code pre {
+  margin: 0;
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  overflow-x: auto;
+}
+
+.app.light .history-item-code pre {
+  background-color: #e8eef7;
+  color: #1e293b;
+}
+
+.history-item-complexity {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.loading,
+.no-reviews {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination-btn {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.app.light .pagination-btn {
+  background: linear-gradient(135deg, #d4a574 0%, #c9a961 100%);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-info {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .review-history {
+    padding: 1rem;
+  }
+
+  .history-item {
+    padding: 1rem;
+  }
+
+  .history-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .grade-badge {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .history-item-complexity {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

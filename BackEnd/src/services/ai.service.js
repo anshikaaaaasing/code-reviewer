@@ -81,12 +81,37 @@ const model = genAI.getGenerativeModel({
 
 
 async function generateContent(prompt) {
-    const result = await model.generateContent(prompt);
+    try {
+        const startTime = Date.now();
+        console.log("🔄 Calling Google Gemini API...");
+        
+        const result = await model.generateContent(prompt);
+        
+        if (!result.response || !result.response.text()) {
+            throw new Error("Empty response from API");
+        }
 
-    console.log(result.response.text())
+        const responseText = result.response.text();
+        const duration = Date.now() - startTime;
+        
+        console.log(`✅ Review completed in ${duration}ms`);
+        console.log(`📊 Response length: ${responseText.length} characters`);
 
-    return result.response.text();
+        return responseText;
 
+    } catch (error) {
+        console.error("❌ Error in generateContent:", error.message);
+        
+        if (error.message.includes("API key")) {
+            throw new Error("Invalid or missing API key");
+        }
+        
+        if (error.message.includes("rate limit")) {
+            throw new Error("Rate limit exceeded. Please try again later.");
+        }
+        
+        throw new Error(`Failed to generate review: ${error.message}`);
+    }
 }
 
 module.exports = generateContent    

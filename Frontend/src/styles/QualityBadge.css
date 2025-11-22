@@ -1,0 +1,68 @@
+.quality-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), rgba(59, 130, 246, 0.1));
+  border: 2px solid #60a5fa;
+  border-radius: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.quality-score-value {
+  font-size: 3rem;
+  font-weight: 800;
+  min-width: 70px;
+  text-align: center;
+}
+
+.quality-score-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.quality-score-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e8eef7;
+}
+
+.quality-score-label {
+  font-size: 0.8rem;
+  color: #a0a9be;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quality-score-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(96, 165, 250, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.quality-score-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* Light mode */
+.app.light .quality-badge {
+  background: linear-gradient(135deg, rgba(201, 169, 97, 0.1), rgba(185, 153, 104, 0.1));
+  border-color: #c9a961;
+}
+
+.app.light .quality-score-number {
+  color: #1e293b;
+}
+
+.app.light .quality-score-label {
+  color: #666;
+}
+
+.app.light .quality-score-bar {
+  background: rgba(201, 169, 97, 0.2);
+}
